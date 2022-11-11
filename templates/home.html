@@ -1,3 +1,57 @@
-<h1>
-Hello World
-</h1>
+<!-- i copied the text from krish's "home.html" here, and replaced with my feature-names -->
+<!-- in the line "<form action="{{ url_for('predict')}}"method="post"></form>", we created a form. This line will go to the "predict" function 'def predict()' in application.py. -->
+<!-- the other later lines in this block of code are the input text. -->
+<!-- 'name="_"' are the input features -->
+<!-- all these html things are not much important in data science -->
+<!-- basic html is sufficient to create this front end application -->
+
+<!-- then we make the "Predict" button in the line '<button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>' -->
+<!-- When we click on this "Predict" button, it will go to the 'predict' in "<form action="{{ url_for('predict')}}"method="post"></form>" -->
+<!-- and then it will call '/predict' in "@app.route('/predict',methods=['POST'])" in application.py, and then the "def predict():" will be called -->
+
+<!-- And then, this output gets displayed in the placeholder "{{prediction_text}}" -->
+
+<!-- after these explanations, he executed the all-completed "application.py" with 'python application.py', then we click the server and the webpage loads perfectly -->
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+  
+</head>
+
+<body>
+ <div class="login">
+	<h1>California House Amount Forecast</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+      <input type="text" name="MedInc" placeholder="Median Income" required="required" /><br>
+    	<input type="text" name="HouseAge" placeholder="Median House Age" required="required" /><br>
+        <input type="text" name="AveRooms" placeholder="Average Room Numbers" required="required" /><br>
+        <input type="text" name="AveBedrms" placeholder="Average Bedroom Numbers" required="required" /><br>
+        <input type="text" name="Population" placeholder="Population" required="required" /><br>
+        <input type="text" name="AveOccup" placeholder="Average Household Members" required="required" /><br>
+        <input type="text" name="Latitude" placeholder="Latitude" required="required" /><br>
+        <input type="text" name="Longitude" placeholder="Longitude" required="required" /><br>
+       
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+   <br>
+   <br>
+  
+   
+ </div>
+ {{prediction_text}}
+
+</body>
+</html>

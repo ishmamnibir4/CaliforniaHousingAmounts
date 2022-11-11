@@ -54,10 +54,22 @@ def predict_api():
 
 # then, in the LnrReg.ipynb file, we did the standardization after the train test split. During this standardization, we forgot to import or transform this particular standardization into a pickle file
 # we will use this same thing in this file as well.
-# We go to the execute LnrReg.ipynb till that part, and we will create a pickle file 'pickle.dump(std_scaling,open('scaling.pkl','wb'))'
-# then we back here
+# We go to the execute LnrReg.ipynb till that part, and we will create a pickle file 'pickle.dump(std_scaling,open('scaling.pkl','wb'))', then we come back here
+# above block of code: So far, we have created an API (predict_api), which was a post request, and we collected the data using Postman, and based on this, we were giving some kind of output after passing it through scalar transformation (that is standardization). And from that we also passed to through the regression 
+# model (which is basically giving the output)
 
-
+# [below block of code]: instead of creating in the form of API, why don't we just create a small web application, where we provide the inputs, then submit the form (as soon
+# as we submit the form, we take the data here, and we do the prediction with the help of our model)
+@app.route('/predict',methods=['POST']) # /predict is a new function
+def predict():# then we define our 'definition predict'. This is obviously a POST method
+# below code: let's say we will have an html page, and from the html fields, we will try to give all the input values from a specific form. So we will create a form, which
+# will (probably) require to give inputs from the user, and those inputs will be all the features from the file "LnrReg.ipynb". We will give all these features in html
+# form, and from this form, we will try to get the data in application.py (it will be a post request)
+    data=[float(x) for x in request.form.values()] # whatever values we are filling in this form, we can capture it cause all the info will be present in this request object. We convert into float value cause all the values are to be inputted as float wrt the model. For loop:  every "x" in the request.form will be converted into float, and finally we get in the form of the list format
+    final_input = scalar.transform(NP.array(data).reshape(1,-1)) # whatever value there is inside "data", we have to reshape it
+    print(final_input) #to see the output of our model
+    output = regmodel.predict(final_input)[0] # without '[0]', we would get array of two dimensions, so with '[0]' we take out our first value
+    return render_template("home.html") # render_template is very important in flask! Here we render a certain html. We redirect it to "home.html". In "home.html", we keep a placeholder called prediction_text. So, after we get the output, we render the 'home.html' and it will replace the placeholder 'prediction_text', and we replace "{}" with our received output
 
 # to run this:
 if __name__ == "__main__":
